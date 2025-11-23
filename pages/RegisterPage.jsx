@@ -260,7 +260,7 @@ const RegisterPage = () => {
                   <p
                     className={isDark ? "text-neutral-400" : "text-neutral-600"}
                   >
-                    Join StreamVault and start sharing
+                    Join StreamVault and start sharing your content
                   </p>
                 </div>
                 {/* Error Message */}
