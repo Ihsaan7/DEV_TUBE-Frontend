@@ -68,7 +68,7 @@ const HomePage = () => {
     <Layout>
       <div className="flex">
         {/* Reusable Sidebar */}
-        <div className="hidden lg:block">
+        <div className="hidden md:block">
           <Sidebar />
         </div>
 
