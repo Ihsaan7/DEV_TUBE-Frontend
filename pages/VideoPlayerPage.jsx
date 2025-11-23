@@ -192,12 +192,12 @@ const VideoPlayerPage = () => {
       const newLikedState = !isLiked;
       setIsLiked(newLikedState);
 
-      // Update like count
+      // Update like count - ensure it doesn't go below 0
       setVideo({
         ...video,
         likesCount: newLikedState
           ? (video.likesCount || 0) + 1
-          : (video.likesCount || 1) - 1,
+          : Math.max((video.likesCount || 0) - 1, 0),
       });
     } catch (err) {
       console.error("Like error:", err);
@@ -400,7 +400,7 @@ const VideoPlayerPage = () => {
             ? {
                 ...c,
                 isLiked: !c.isLiked,
-                likesCount: (c.likesCount || 0) + (c.isLiked ? -1 : 1),
+                likesCount: Math.max((c.likesCount || 0) + (c.isLiked ? -1 : 1), 0),
               }
             : c
         )
