@@ -49,7 +49,90 @@ const RegisterPage = () => {
   const handleCoverImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
-      if (loading) {
+      setCoverImage(file);
+      setCoverImagePreview(URL.createObjectURL(file));
+    }
+  };
+
+  // Validate form before submission
+  const validateForm = () => {
+    if (!formData.username.trim()) {
+      setError("Username is required");
+      return false;
+    }
+    if (!formData.email.trim()) {
+      setError("Email is required");
+      return false;
+    }
+    if (!formData.fullName.trim()) {
+      setError("Full name is required");
+      return false;
+    }
+    if (!formData.password) {
+      setError("Password is required");
+      return false;
+    }
+    if (formData.password.length < 6) {
+      setError("Password must be at least 6 characters");
+      return false;
+    }
+    if (formData.password !== formData.confirmPassword) {
+      setError("Passwords do not match");
+      return false;
+    }
+    if (!avatar) {
+      setError("Avatar is required");
+      return false;
+    }
+    return true;
+  };
+
+  // Handle form submission
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError("");
+
+    if (!validateForm()) {
+      return;
+    }
+
+    setLoading(true);
+
+    try {
+      const userData = {
+        username: formData.username,
+        email: formData.email,
+        fullName: formData.fullName,
+        password: formData.password,
+        avatar: avatar,
+        coverImage: coverImage,
+      };
+
+      const response = await register(userData);
+
+      // Registration successful, now login to get tokens
+      if (response) {
+        // Login with the credentials to get tokens
+        const loginResponse = await login({
+          email: formData.email,
+          password: formData.password,
+        });
+
+        if (loginResponse && loginResponse.user) {
+          handleLogin(loginResponse.user);
+          navigate("/home");
+        }
+      }
+    } catch (err) {
+      setError(
+        err.response?.data?.message || "Registration failed. Please try again."
+      );
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  if (loading) {
         // Responsive skeleton loader for register page
         return (
           <div
@@ -207,54 +290,6 @@ const RegisterPage = () => {
         </div>
       );
     }
-
-    return true;
-  };
-
-  // Handle form submission
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setError("");
-
-    if (!validateForm()) {
-      return;
-    }
-
-    setLoading(true);
-
-    try {
-      const userData = {
-        username: formData.username,
-        email: formData.email,
-        fullName: formData.fullName,
-        password: formData.password,
-        avatar: avatar,
-        coverImage: coverImage,
-      };
-
-      const response = await register(userData);
-
-      // Registration successful, now login to get tokens
-      if (response) {
-        // Login with the credentials to get tokens
-        const loginResponse = await login({
-          email: formData.email,
-          password: formData.password,
-        });
-
-        if (loginResponse && loginResponse.user) {
-          handleLogin(loginResponse.user);
-          navigate("/home");
-        }
-      }
-    } catch (err) {
-      setError(
-        err.response?.data?.message || "Registration failed. Please try again."
-      );
-    } finally {
-      setLoading(false);
-    }
-  };
 
   return (
     <div
