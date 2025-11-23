@@ -188,8 +188,8 @@ const VideoPlayerPage = () => {
 
   const handleLike = async () => {
     try {
-      await likeVideo(videoId);
-      const newLikedState = !isLiked;
+      const response = await likeVideo(videoId);
+      const newLikedState = response.data?.isLiked ?? !isLiked;
       setIsLiked(newLikedState);
 
       // Update like count - ensure it doesn't go below 0
@@ -392,15 +392,17 @@ const VideoPlayerPage = () => {
 
   const handleLikeComment = async (commentId) => {
     try {
-      await likeComment(commentId);
-      // Toggle like in UI (simplified - in production, fetch like status from backend)
+      const response = await likeComment(commentId);
+      const newLikedState = response.data?.isLiked;
+      
+      // Update comment in UI with backend response
       setComments(
         comments.map((c) =>
           c._id === commentId
             ? {
                 ...c,
-                isLiked: !c.isLiked,
-                likesCount: Math.max((c.likesCount || 0) + (c.isLiked ? -1 : 1), 0),
+                isLiked: newLikedState,
+                likesCount: Math.max((c.likesCount || 0) + (newLikedState ? 1 : -1), 0),
               }
             : c
         )
