@@ -4,6 +4,7 @@ import { getLikedVideos } from "../api/services/like.services";
 import { useTheme } from "../context/ThemeContext";
 import Layout from "../components/layout/Layout";
 import Sidebar from "../components/layout/Sidebar";
+import Spinner from "../components/Spinner.jsx";
 
 const LikedVideosPage = () => {
   const { isDark } = useTheme();
@@ -101,9 +102,10 @@ const LikedVideosPage = () => {
                 isDark
                   ? "border-neutral-700 text-neutral-300"
                   : "border-neutral-300 text-neutral-700"
-              }`}
+              } flex items-center gap-2`}
             >
-              Loading...
+              <Spinner size="sm" />
+              <span>Loading</span>
             </div>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-6 auto-rows-fr">

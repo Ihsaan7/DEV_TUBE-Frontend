@@ -98,6 +98,8 @@ const VideoPlayerPage = () => {
 
       const videoData = response.data?.video || response.data;
       setVideo(videoData);
+      // Initialize like state and counts from backend response
+      setIsLiked(!!videoData?.isLiked);
     } catch (err) {
       setError(err.response?.data?.message || "Failed to load video");
     } finally {

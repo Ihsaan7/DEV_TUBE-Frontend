@@ -4,6 +4,7 @@ import { getWatchHistory } from "../api/services/authServices";
 import { useTheme } from "../context/ThemeContext";
 import Layout from "../components/layout/Layout";
 import Sidebar from "../components/layout/Sidebar";
+import Spinner from "../components/Spinner.jsx";
 
 const WatchHistoryPage = () => {
   const { isDark } = useTheme();
@@ -100,9 +101,10 @@ const WatchHistoryPage = () => {
                 isDark
                   ? "border-neutral-700 text-neutral-300"
                   : "border-neutral-300 text-neutral-700"
-              }`}
+              } flex items-center gap-2`}
             >
-              Loading...
+              <Spinner size="sm" />
+              <span>Loading</span>
             </div>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-6 auto-rows-fr">
@@ -241,85 +243,65 @@ const WatchHistoryPage = () => {
                     isDark ? "text-neutral-500" : "text-neutral-500"
                   }`}
                 >
-                  Videos you watch will appear here
+                  Start watching videos to build your history.
                 </p>
-                <button
-                  onClick={() => navigate("/home")}
-                  className="bg-orange-500 hover:bg-orange-600 text-white px-6 py-3 font-semibold transition-all duration-200 hover:scale-105 active:scale-95"
-                >
-                  Explore Videos
-                </button>
               </div>
             ) : (
               <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-6 auto-rows-fr">
                 {videos.map((video) => (
-                  <div
+                  <button
                     key={video._id}
-                    onClick={() => handleVideoClick(video._id)}
-                    className={`border overflow-hidden transition-all duration-300 cursor-pointer group ${
+                    className={`text-left border rounded-lg overflow-hidden transition-all duration-200 w-full ${
                       isDark
-                        ? "bg-neutral-900 border-neutral-800 hover:border-neutral-700"
-                        : "bg-white border-neutral-200 hover:border-neutral-300 shadow-md hover:shadow-xl"
+                        ? "bg-neutral-900 border-neutral-800 hover:bg-neutral-800"
+                        : "bg-white border-neutral-200 hover:shadow-lg"
                     }`}
-                    style={{ willChange: "transform, box-shadow" }}
+                    onClick={() => handleVideoClick(video._id)}
                   >
                     {/* Thumbnail */}
-                    <div className="relative overflow-hidden">
+                    <div className="relative">
                       <img
-                        src={
-                          video.thumbnail ||
-                          "https://via.placeholder.com/320x180"
-                        }
+                        src={video.thumbnail}
                         alt={video.title}
-                        className="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-105"
+                        className="w-full h-48 object-cover"
                       />
-                      {/* Duration Badge */}
-                      <div className="absolute bottom-2 right-2 bg-black/80 text-white text-xs px-2 py-1 font-medium rounded">
+                      <span className="absolute bottom-2 right-2 bg-black/60 text-white text-xs px-2 py-1 rounded">
                         {formatDuration(video.duration)}
-                      </div>
+                      </span>
                     </div>
 
-                    {/* Video Info */}
+                    {/* Info */}
                     <div className="p-4">
                       <h4
-                        className={`font-semibold tracking-tight line-clamp-2 mb-3 ${
+                        className={`text-base font-bold mb-1 line-clamp-2 ${
                           isDark ? "text-white" : "text-neutral-900"
-                        } transition-colors duration-200`}
+                        }`}
                       >
                         {video.title}
                       </h4>
-
-                      {/* Channel Info */}
-                      <div className="flex items-center gap-2 mb-2">
+                      <div className="flex items-center gap-2 text-sm">
                         <img
-                          src={
-                            video.owner?.avatar ||
-                            "https://via.placeholder.com/32"
-                          }
-                          alt={video.owner?.username}
-                          className="w-8 h-8 rounded-full object-cover"
+                          src={video.owner?.avatar || "/default-avatar.png"}
+                          alt={video.owner?.fullName || ""}
+                          className="w-8 h-8 rounded-full"
                         />
-                        <p
-                          className={`text-sm font-medium ${
-                            isDark ? "text-neutral-400" : "text-neutral-600"
-                          } transition-colors duration-200`}
+                        <span
+                          className={`font-semibold ${
+                            isDark ? "text-neutral-300" : "text-neutral-700"
+                          }`}
                         >
                           {video.owner?.fullName || video.owner?.username}
-                        </p>
+                        </span>
                       </div>
-
-                      {/* Stats */}
                       <div
-                        className={`flex items-center gap-2 text-xs font-medium ${
-                          isDark ? "text-neutral-500" : "text-neutral-500"
-                        } transition-colors duration-200`}
+                        className={`mt-2 text-sm font-semibold ${
+                          isDark ? "text-neutral-400" : "text-neutral-600"
+                        }`}
                       >
-                        <span>{formatViews(video.view || 0)} views</span>
-                        <span>•</span>
-                        <span>{timeAgo(video.createdAt)}</span>
+                        {formatViews(video.view)} views • {timeAgo(video.createdAt)}
                       </div>
                     </div>
-                  </div>
+                  </button>
                 ))}
               </div>
             )}
