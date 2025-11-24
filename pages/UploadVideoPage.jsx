@@ -5,6 +5,7 @@ import { useTheme } from "../context/ThemeContext";
 import Layout from "../components/layout/Layout";
 import apiClient from "../api/axios.config";
 import Spinner from "../components/Spinner";
+import { uploadToCloudinary } from "../utils/cloudinary";
 
 const UploadVideoPage = () => {
   const { user } = useAuth();
@@ -41,9 +42,9 @@ const UploadVideoPage = () => {
   const handleVideoChange = (e) => {
     const file = e.target.files[0];
     if (file) {
-      // Check file size (50MB max as per backend)
-      if (file.size > 50 * 1024 * 1024) {
-        setError("Video file must be less than 50MB");
+      // Check file size (100MB max for Cloudinary free tier)
+      if (file.size > 100 * 1024 * 1024) {
+        setError("Video file must be less than 100MB");
         return;
       }
 
@@ -103,7 +104,7 @@ const UploadVideoPage = () => {
     return true;
   };
 
-  // Handle form submission
+  // Handle form submission with direct Cloudinary upload
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
@@ -116,34 +117,42 @@ const UploadVideoPage = () => {
     setUploadProgress(0);
 
     try {
-      const uploadData = new FormData();
-      uploadData.append("title", formData.title);
-      uploadData.append("description", formData.description);
-      uploadData.append("videoFile", videoFile);
-      uploadData.append("thumbnail", thumbnail);
-      uploadData.append("isPublished", isPublished);
-
-      const response = await apiClient.post(
-        "/videos/upload-video",
-        uploadData,
-        {
-          headers: { "Content-Type": "multipart/form-data" },
-          onUploadProgress: (progressEvent) => {
-            const percentCompleted = Math.round(
-              (progressEvent.loaded * 100) / progressEvent.total
-            );
-            setUploadProgress(percentCompleted);
-          },
-        }
+      // Step 1: Upload video to Cloudinary (0-50% progress)
+      const videoResult = await uploadToCloudinary(
+        videoFile,
+        'video',
+        (progress) => setUploadProgress(Math.round(progress * 0.5))
       );
+
+      // Step 2: Upload thumbnail to Cloudinary (50-80% progress)
+      const thumbnailResult = await uploadToCloudinary(
+        thumbnail,
+        'image',
+        (progress) => setUploadProgress(50 + Math.round(progress * 0.3))
+      );
+
+      setUploadProgress(80);
+
+      // Step 3: Send URLs to backend (80-100% progress)
+      const response = await apiClient.post("/videos/upload-video", {
+        title: formData.title,
+        description: formData.description,
+        videoUrl: videoResult.url,
+        thumbnailUrl: thumbnailResult.url,
+        duration: videoResult.duration || 0,
+        isPublished: isPublished,
+      });
+
+      setUploadProgress(100);
 
       if (response) {
         // Redirect to home or video page after successful upload
         navigate("/home");
       }
     } catch (err) {
+      console.error("Upload error:", err);
       setError(
-        err.response?.data?.message || "Upload failed. Please try again."
+        err.response?.data?.message || err.message || "Upload failed. Please try again."
       );
     } finally {
       setLoading(false);
@@ -637,9 +646,9 @@ const UploadVideoPage = () => {
                   }`}
                 >
                   <p>• Your video will be processed after upload</p>
--                 <p>• Maximum file size: 5MB</p>
-+                 <p>• Maximum video size: 50MB (thumbnail 5MB)</p>
-                  <p>• Supported formats: MP4, AVI, MOV</p>
+                  <p>• Maximum video size: 100MB (thumbnail 5MB)</p>
+                  <p>• Supported formats: MP4, AVI, MOV, WebM</p>
+                  <p>• Direct upload to Cloudinary CDN</p>
                 </div>
               </div>
             </div>
