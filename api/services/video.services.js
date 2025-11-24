@@ -1,16 +1,16 @@
 import apiClient from "../axios.config";
 
 // ==================== UPLOAD VIDEO ====================
-export const uploadVideo = async (videoData) => {
+export const uploadVideo = async (videoData, onProgress) => {
   try {
-    const formData = new FormData();
-    formData.append("title", videoData.title);
-    formData.append("description", videoData.description);
-    formData.append("videoFile", videoData.videoFile);
-    formData.append("thumbnail", videoData.thumbnail);
-
-    const response = await apiClient.post("/videos/upload-video", formData, {
-      headers: { "Content-Type": "multipart/form-data" },
+    // For direct Cloudinary upload, we'll send URLs instead of files
+    const response = await apiClient.post("/videos/upload-video", {
+      title: videoData.title,
+      description: videoData.description,
+      videoFileUrl: videoData.videoFileUrl,
+      thumbnailUrl: videoData.thumbnailUrl,
+      duration: videoData.duration,
+      isPublished: videoData.isPublished,
     });
 
     return response;
