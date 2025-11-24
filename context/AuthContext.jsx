@@ -5,6 +5,7 @@ import {
   getUserFromStorage,
   isAuthenticated,
 } from "../api/services/authServices.js";
+import Spinner from "../components/Spinner.jsx";
 
 const AuthContext = createContext(null);
 
@@ -77,7 +78,11 @@ export const AuthProvider = ({ children }) => {
   };
 
   if (isLoading) {
-    return <div>Loading</div>;
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <Spinner size="lg" />
+      </div>
+    );
   }
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
