@@ -422,7 +422,7 @@ const VideoPlayerPage = () => {
       setPlaylists(response.data || []);
     } catch (err) {
       console.error("Failed to load playlists:", err);
-      alert("Failed to load playlists");
+      setToast({ message: "Failed to load playlists", type: "error" });
     } finally {
       setPlaylistsLoading(false);
     }
@@ -432,10 +432,13 @@ const VideoPlayerPage = () => {
     try {
       setAddingToPlaylist(playlistId);
       await addVideoToPlaylist(playlistId, videoId);
-      alert("Video added to playlist!");
+      setToast({ message: "Video added to playlist", type: "success" });
     } catch (err) {
       console.error("Failed to add to playlist:", err);
-      alert(err.response?.data?.message || "Failed to add video to playlist");
+      setToast({
+        message: err.response?.data?.message || "Failed to add video to playlist",
+        type: "error",
+      });
     } finally {
       setAddingToPlaylist(null);
     }
@@ -571,7 +574,7 @@ const VideoPlayerPage = () => {
             </h1>
 
             {/* Action Buttons */}
-            <div className="flex flex-wrap items-center gap-2">
+            <div className="flex flex-wrap items-center gap-2 justify-start">
               {/* Like Button */}
               <button
                 onClick={handleLike}
@@ -661,9 +664,9 @@ const VideoPlayerPage = () => {
                 <span>{formatDate(video.createdAt)}</span>
               </div>
               <p
-                className={`text-xs sm:text-sm font-medium leading-relaxed ${
-                  isDark ? "text-neutral-300" : "text-neutral-700"
-                }`}
+                className={`text-sm sm:text-base font-medium leading-7 ${
+                   isDark ? "text-neutral-300" : "text-neutral-700"
+                 }`}
               >
                 {video.description}
               </p>
@@ -929,8 +932,8 @@ const VideoPlayerPage = () => {
                               }
                               className={`w-full px-4 py-3 border-b-2 font-medium transition-colors focus:outline-none ${
                                 isDark
-                                  ? "bg-transparent border-neutral-800 text-white placeholder-neutral-600 focus:border-orange-500"
-                                  : "bg-transparent border-neutral-300 text-neutral-900 placeholder-neutral-400 focus:border-orange-500"
+                                  ? "bg-transparent border-neutral-800 text-white placeholder-neutral-600"
+                                  : "bg-transparent border-neutral-300 text-neutral-900 placeholder-neutral-400"
                               }`}
                               autoFocus
                             />
@@ -1216,7 +1219,7 @@ const VideoPlayerPage = () => {
                 </div>
               )}
 
-              <div className="mt-4 pt-4 border-t ${isDark ? 'border-neutral-800' : 'border-neutral-200'}">
+              <div className={`mt-4 pt-4 border-t ${isDark ? 'border-neutral-800' : 'border-neutral-200'}`}>
                 <button
                   onClick={() => {
                     setShowPlaylistModal(false);

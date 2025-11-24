@@ -4,6 +4,7 @@ import { useAuth } from "../context/AuthContext";
 import { useTheme } from "../context/ThemeContext";
 import Layout from "../components/layout/Layout";
 import apiClient from "../api/axios.config";
+import Spinner from "../components/Spinner";
 
 const UploadVideoPage = () => {
   const { user } = useAuth();
@@ -157,18 +158,13 @@ const UploadVideoPage = () => {
             isDark ? "bg-neutral-950" : "bg-neutral-50"
           }`}
         >
-          <div className="text-center">
-            {/* Simple Spinner */}
-            <div className="relative w-16 h-16 mx-auto mb-6">
-              <div className={`absolute inset-0 border-4 ${
-                isDark ? "border-neutral-800" : "border-neutral-200"
-              }`}></div>
-              <div className="absolute inset-0 border-4 border-transparent border-t-orange-500 animate-spin"></div>
-            </div>
+          <div className="flex flex-col items-center text-center gap-4">
+            {/* Animated Spinner */}
+            <Spinner size="lg" variant="pulse" className="drop-shadow-md" label="Uploading" />
 
             {/* Loading Text */}
             <h2
-              className={`text-xl font-bold tracking-tight mb-2 ${
+              className={`text-xl font-bold tracking-tight ${
                 isDark ? "text-white" : "text-neutral-900"
               }`}
             >
@@ -181,6 +177,23 @@ const UploadVideoPage = () => {
             >
               Please wait while we process your video...
             </p>
+
+            {/* Progress */}
+            <div className="w-64 max-w-[80vw]">
+              <div className={`h-2 rounded-full ${
+                isDark ? "bg-neutral-800" : "bg-neutral-200"
+              }`}>
+                <div
+                  className="h-2 rounded-full bg-orange-500 transition-all"
+                  style={{ width: `${uploadProgress}%` }}
+                />
+              </div>
+              <div className={`mt-2 text-xs font-semibold ${
+                isDark ? "text-neutral-400" : "text-neutral-600"
+              }`}>
+                {uploadProgress}%
+              </div>
+            </div>
           </div>
         </div>
       </Layout>
