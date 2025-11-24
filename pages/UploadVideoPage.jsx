@@ -41,9 +41,9 @@ const UploadVideoPage = () => {
   const handleVideoChange = (e) => {
     const file = e.target.files[0];
     if (file) {
-      // Check file size (5MB max as per backend)
-      if (file.size > 5 * 1024 * 1024) {
-        setError("Video file must be less than 5MB");
+      // Check file size (50MB max as per backend)
+      if (file.size > 50 * 1024 * 1024) {
+        setError("Video file must be less than 50MB");
         return;
       }
 
@@ -63,7 +63,7 @@ const UploadVideoPage = () => {
   const handleThumbnailChange = (e) => {
     const file = e.target.files[0];
     if (file) {
-      // Check file size
+      // Check file size (keep thumbnails small)
       if (file.size > 5 * 1024 * 1024) {
         setError("Thumbnail must be less than 5MB");
         return;
@@ -637,7 +637,8 @@ const UploadVideoPage = () => {
                   }`}
                 >
                   <p>• Your video will be processed after upload</p>
-                  <p>• Maximum file size: 5MB</p>
+-                 <p>• Maximum file size: 5MB</p>
++                 <p>• Maximum video size: 50MB (thumbnail 5MB)</p>
                   <p>• Supported formats: MP4, AVI, MOV</p>
                 </div>
               </div>

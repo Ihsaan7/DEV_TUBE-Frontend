@@ -267,7 +267,7 @@ const RegisterPage = () => {
                 isDark ? "text-neutral-400" : "text-neutral-600"
               }`}
             >
-              Join thousands of creators sharing their content with the world.
+              Start uploading in minutes — videos up to 50MB and thumbnails 5MB.
             </p>
           </div>
 
@@ -308,14 +308,14 @@ const RegisterPage = () => {
                     isDark ? "text-white" : "text-neutral-900"
                   }`}
                 >
-                  Free Forever
+                  Free to Use
                 </h3>
                 <p
                   className={`text-sm ${
                     isDark ? "text-neutral-500" : "text-neutral-600"
                   }`}
                 >
-                  No hidden fees or premium tiers required
+                  No paywalls — sign up and start uploading
                 </p>
               </div>
             </div>

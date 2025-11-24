@@ -575,7 +575,7 @@ const VideoPlayerPage = () => {
               </h1>
 
               {/* Action Buttons */}
-              <div className="flex flex-wrap items-center gap-2 justify-end">
+              <div className="flex items-center gap-2 sm:gap-3 justify-start sm:justify-end flex-wrap">
                 {/* Like Button */}
                 <button
                   onClick={handleLike}

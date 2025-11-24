@@ -85,7 +85,7 @@ const LoginPage = () => {
               <h1 className={`text-4xl font-bold tracking-tight ${isDark ? 'text-white' : 'text-neutral-900'}`}>StreamVault</h1>
             </div>
             <p className={`text-lg leading-relaxed max-w-md ${isDark ? 'text-neutral-400' : 'text-neutral-600'}`}>
-              Professional video platform for creators and audiences worldwide.
+              Fast, simple video platform for creators. Uploads up to 50MB per video and 5MB thumbnails.
             </p>
           </div>
 
@@ -94,21 +94,21 @@ const LoginPage = () => {
             <div className="flex items-start gap-4 group">
               <div className={`w-1 h-12 ${isDark ? 'bg-white' : 'bg-neutral-900'} transition-all duration-300 group-hover:h-16`} />
               <div>
-                <h3 className={`font-semibold mb-1 ${isDark ? 'text-white' : 'text-neutral-900'}`}>Unlimited Storage</h3>
-                <p className={`text-sm ${isDark ? 'text-neutral-500' : 'text-neutral-600'}`}>Upload and manage your content without limits</p>
+                <h3 className={`font-semibold mb-1 ${isDark ? 'text-white' : 'text-neutral-900'}`}>Reliable Cloud Storage</h3>
+                <p className={`text-sm ${isDark ? 'text-neutral-500' : 'text-neutral-600'}`}>Video uploads up to 50MB; thumbnails 5MB</p>
               </div>
             </div>
             <div className="flex items-start gap-4 group">
               <div className={`w-1 h-12 ${isDark ? 'bg-white' : 'bg-neutral-900'} transition-all duration-300 group-hover:h-16`} />
               <div>
-                <h3 className={`font-semibold mb-1 ${isDark ? 'text-white' : 'text-neutral-900'}`}>HD Streaming</h3>
-                <p className={`text-sm ${isDark ? 'text-neutral-500' : 'text-neutral-600'}`}>Crystal clear playback for your audience</p>
+                <h3 className={`font-semibold mb-1 ${isDark ? 'text-white' : 'text-neutral-900'}`}>Smooth Playback</h3>
+                <p className={`text-sm ${isDark ? 'text-neutral-500' : 'text-neutral-600'}`}>Optimized playback for a great viewing experience</p>
               </div>
             </div>
             <div className="flex items-start gap-4 group">
               <div className={`w-1 h-12 ${isDark ? 'bg-white' : 'bg-neutral-900'} transition-all duration-300 group-hover:h-16`} />
               <div>
-                <h3 className={`font-semibold mb-1 ${isDark ? 'text-white' : 'text-neutral-900'}`}>Analytics Dashboard</h3>
+                <h3 className={`font-semibold mb-1 ${isDark ? 'text-white' : 'text-neutral-900'}`}>Channel Insights</h3>
                 <p className={`text-sm ${isDark ? 'text-neutral-500' : 'text-neutral-600'}`}>Track performance and grow your channel</p>
               </div>
             </div>
@@ -222,12 +222,9 @@ const LoginPage = () => {
                   disabled={loading}
                 />
               </div>
-
               {/* Password Input */}
               <div className="group">
-                <label htmlFor="password" className={`block text-sm font-medium mb-2 transition-colors ${
-                  isDark ? 'text-neutral-300 group-focus-within:text-white' : 'text-neutral-700 group-focus-within:text-neutral-900'
-                }`}>
+                <label htmlFor="password" className={`block text-sm font-medium mb-2 transition-colors ${isDark ? 'text-neutral-300 group-focus-within:text-white' : 'text-neutral-700 group-focus-within:text-neutral-900'}`}>
                   Password
                 </label>
                 <input
@@ -236,11 +233,7 @@ const LoginPage = () => {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="Enter your password"
-                  className={`w-full px-3 sm:px-4 py-2.5 sm:py-3 text-sm sm:text-base border transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed ${
-                    isDark 
-                      ? 'bg-neutral-950 border-neutral-800 text-white placeholder-neutral-600 focus:border-orange-500 focus:ring-orange-500 focus:ring-offset-neutral-900' 
-                      : 'bg-white border-neutral-300 text-neutral-900 placeholder-neutral-400 focus:border-orange-500 focus:ring-orange-500 focus:ring-offset-white'
-                  }`}
+                  className={`w-full px-3 sm:px-4 py-2.5 sm:py-3 text-sm sm:text-base border transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed ${isDark ? 'bg-neutral-950 border-neutral-800 text-white placeholder-neutral-600 focus:border-orange-500 focus:ring-orange-500 focus:ring-offset-neutral-900' : 'bg-white border-neutral-300 text-neutral-900 placeholder-neutral-400 focus:border-orange-500 focus:ring-orange-500 focus:ring-offset-white'}`}
                   disabled={loading}
                 />
               </div>
@@ -249,11 +242,7 @@ const LoginPage = () => {
               <button
                 type="submit"
                 disabled={loading}
-                className={`w-full py-3 sm:py-3.5 px-4 text-sm sm:text-base font-semibold transition-all duration-200 ${
-                  loading
-                    ? isDark ? 'bg-neutral-800 text-neutral-500 cursor-not-allowed' : 'bg-neutral-200 text-neutral-400 cursor-not-allowed'
-                    : 'bg-orange-500 text-white hover:bg-orange-600 active:scale-[0.98]'
-                }`}
+                className={`w-full py-3 sm:py-3.5 px-4 text-sm sm:text-base font-semibold transition-all duration-200 ${loading ? (isDark ? 'bg-neutral-800 text-neutral-500 cursor-not-allowed' : 'bg-neutral-200 text-neutral-400 cursor-not-allowed') : 'bg-orange-500 text-white hover:bg-orange-600 active:scale-[0.98]'}`}
               >
                 {loading ? (
                   <span className="flex items-center justify-center gap-2">
@@ -269,7 +258,6 @@ const LoginPage = () => {
               </button>
             </form>
 
-            {/* Register Link */}
             <div className="mt-5 sm:mt-6 text-center">
               <p className={`text-sm sm:text-base ${isDark ? 'text-neutral-400' : 'text-neutral-600'}`}>
                 Don't have an account?{" "}
@@ -278,12 +266,11 @@ const LoginPage = () => {
                 </a>
               </p>
             </div>
-          </div>
 
-          {/* Footer */}
-          <p className={`text-center text-xs sm:text-sm mt-6 sm:mt-8 px-2 ${isDark ? 'text-neutral-600' : 'text-neutral-500'}`}>
-            By signing in, you agree to our Terms of Service and Privacy Policy
-          </p>
+            <p className={`text-center text-xs sm:text-sm mt-6 sm:mt-8 px-2 ${isDark ? 'text-neutral-600' : 'text-neutral-500'}`}>
+              By signing in, you agree to our Terms of Service and Privacy Policy
+            </p>
+          </div>
         </div>
       </div>
     </div>
