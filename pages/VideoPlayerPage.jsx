@@ -564,92 +564,94 @@ const VideoPlayerPage = () => {
               </video>
             </div>
 
-            {/* Title */}
-            <h1
-              className={`text-lg sm:text-xl lg:text-2xl font-bold tracking-tight ${
-                isDark ? "text-white" : "text-neutral-900"
-              }`}
-            >
-              {video.title}
-            </h1>
-
-            {/* Action Buttons */}
-            <div className="flex flex-wrap items-center gap-2 justify-start">
-              {/* Like Button */}
-              <button
-                onClick={handleLike}
-                className={`flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2 border text-sm sm:text-base font-semibold transition-all duration-200 ${
-                  isLiked
-                    ? "border-orange-500 bg-orange-500 text-white"
-                    : isDark
-                    ? "border-neutral-700 text-neutral-300 hover:bg-neutral-800"
-                    : "border-neutral-300 text-neutral-700 hover:bg-neutral-50"
+            {/* Title + Actions */}
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+              <h1
+                className={`text-xl sm:text-2xl lg:text-3xl font-bold tracking-tight ${
+                  isDark ? "text-white" : "text-neutral-900"
                 }`}
               >
-                <svg
-                  className="w-4 h-4 sm:w-5 sm:h-5"
-                  fill={isLiked ? "currentColor" : "none"}
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21h-4.017c-.163 0-.326-.02-.485-.06L7 20m7-10V5a2 2 0 00-2-2h-.095c-.5 0-.905.405-.905.905 0 .714-.211 1.412-.608 2.006L7 11v9m7-10h-2M7 20H5a2 2 0 01-2-2v-6a2 2 0 012-2h2.5"
-                  />
-                </svg>
-                <span>{video.likesCount || 0}</span>
-              </button>
+                {video.title}
+              </h1>
 
-              {/* Share Button */}
-              <button
-                className={`flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2 border text-sm sm:text-base font-semibold transition-all duration-200 ${
-                  isDark
-                    ? "border-neutral-700 text-neutral-300 hover:bg-neutral-800"
-                    : "border-neutral-300 text-neutral-700 hover:bg-neutral-50"
-                }`}
-              >
-                <svg
-                  className="w-4 h-4 sm:w-5 sm:h-5"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
+              {/* Action Buttons */}
+              <div className="flex flex-wrap items-center gap-2 justify-end">
+                {/* Like Button */}
+                <button
+                  onClick={handleLike}
+                  className={`flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2 border text-sm sm:text-base font-semibold transition-all duration-200 ${
+                    isLiked
+                      ? "border-orange-500 bg-orange-500 text-white"
+                      : isDark
+                      ? "border-neutral-700 text-neutral-300 hover:bg-neutral-800"
+                      : "border-neutral-300 text-neutral-700 hover:bg-neutral-50"
+                  }`}
                 >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"
-                  />
-                </svg>
-                <span>Share</span>
-              </button>
+                  <svg
+                    className="w-4 h-4 sm:w-5 sm:h-5"
+                    fill={isLiked ? "currentColor" : "none"}
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21h-4.017c-.163 0-.326-.02-.485-.06L7 20m7-10V5a2 2 0 00-2-2h-.095c-.5 0-.905.405-.905.905 0 .714-.211 1.412-.608 2.006L7 11v9m7-10h-2M7 20H5a2 2 0 01-2-2v-6a2 2 0 012-2h2.5"
+                    />
+                  </svg>
+                  <span>{video.likesCount || 0}</span>
+                </button>
 
-              {/* Add to Playlist Button */}
-              <button
-                onClick={handleOpenPlaylistModal}
-                className={`flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2 border text-sm sm:text-base font-semibold transition-all duration-200 ${
-                  isDark
-                    ? "border-neutral-700 text-neutral-300 hover:bg-neutral-800"
-                    : "border-neutral-300 text-neutral-700 hover:bg-neutral-50"
-                }`}
-              >
-                <svg
-                  className="w-4 h-4 sm:w-5 sm:h-5"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
+                {/* Share Button */}
+                <button
+                  className={`flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2 border text-sm sm:text-base font-semibold transition-all duration-200 ${
+                    isDark
+                      ? "border-neutral-700 text-neutral-300 hover:bg-neutral-800"
+                      : "border-neutral-300 text-neutral-700 hover:bg-neutral-50"
+                  }`}
                 >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M12 4v16m8-8H4"
-                  />
-                </svg>
-                <span>Save</span>
-              </button>
+                  <svg
+                    className="w-4 h-4 sm:w-5 sm:h-5"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"
+                    />
+                  </svg>
+                  <span>Share</span>
+                </button>
+
+                {/* Add to Playlist Button */}
+                <button
+                  onClick={handleOpenPlaylistModal}
+                  className={`flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2 border text-sm sm:text-base font-semibold transition-all duration-200 ${
+                    isDark
+                      ? "border-neutral-700 text-neutral-300 hover:bg-neutral-800"
+                      : "border-neutral-300 text-neutral-700 hover:bg-neutral-50"
+                  }`}
+                >
+                  <svg
+                    className="w-4 h-4 sm:w-5 sm:h-5"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M12 4v16m8-8H4"
+                    />
+                  </svg>
+                  <span>Save</span>
+                </button>
+              </div>
             </div>
 
             {/* Views and Description */}
@@ -664,7 +666,7 @@ const VideoPlayerPage = () => {
                 <span>{formatDate(video.createdAt)}</span>
               </div>
               <p
-                className={`text-sm sm:text-base font-medium leading-7 ${
+                className={`text-base md:text-lg font-medium leading-7 md:leading-8 ${
                    isDark ? "text-neutral-300" : "text-neutral-700"
                  }`}
               >
