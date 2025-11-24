@@ -6,6 +6,7 @@ import {
   updateVideoContent,
   togglePublishStatus,
 } from "../api/services/video.services";
+import { getChannelVideos } from "../api/services/dashboard.services";
 import { toggleSubscribe } from "../api/services/subscription.services";
 import Layout from "../components/layout/Layout";
 import { useAuth } from "../context/AuthContext";
@@ -64,13 +65,18 @@ const ChannelPage = () => {
       }
 
       // Only show unpublished videos if viewing own profile
-      let videoParams = { userId: channelRes.data?._id, limit: 50 };
-      if (!user || user.username !== channelUsername) {
-        videoParams.isPublished = true;
+      const isOwn = user && user.username === channelUsername;
+      if (isOwn) {
+        // Use authenticated dashboard endpoint for richer owner data
+        const ownerVideosRes = await getChannelVideos();
+        const videosData = ownerVideosRes.data?.videos || ownerVideosRes.data?.videos?.docs || ownerVideosRes.data?.docs || [];
+        setVideos(Array.isArray(videosData) ? videosData : []);
+      } else {
+        let videoParams = { userId: channelRes.data?._id, limit: 50, isPublished: true };
+        const response = await getAllVideos(videoParams);
+        const videosData = response.data?.videos || [];
+        setVideos(videosData);
       }
-      const response = await getAllVideos(videoParams);
-      const videosData = response.data?.videos || [];
-      setVideos(videosData);
     } catch (err) {
       setError("Failed to load channel data");
       console.error(err);
@@ -818,7 +824,7 @@ const ChannelPage = () => {
       {confirmDialog && (
         <ConfirmDialog
           message={confirmDialog.message}
-          onConfirm={confirmDialog.onCancel}
+          onConfirm={confirmDialog.onConfirm}
           onCancel={confirmDialog.onCancel}
         />
       )}
