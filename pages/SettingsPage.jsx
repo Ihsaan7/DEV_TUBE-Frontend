@@ -127,7 +127,7 @@ const SettingsPage = () => {
       const response = await updateAvatar(avatarFile);
 
       // Update user avatar in context and localStorage
-      const updatedUser = { ...user, avatar: response.data.avatar };
+      const updatedUser = { ...user, avatar: response.data.user.avatar };
       setUser(updatedUser);
       localStorage.setItem("user", JSON.stringify(updatedUser));
 
@@ -159,7 +159,7 @@ const SettingsPage = () => {
       const response = await updateCoverImage(coverImageFile);
 
       // Update user cover image in context and localStorage
-      const updatedUser = { ...user, coverImage: response.data.coverImage };
+      const updatedUser = { ...user, coverImage: response.data.user.coverImage };
       setUser(updatedUser);
       localStorage.setItem("user", JSON.stringify(updatedUser));
 
