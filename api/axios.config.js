@@ -1,12 +1,17 @@
 import axios from "axios";
 
-const API_BASE =
-  import.meta.env.VITE_API_BASE_URL || "http://localhost:8000/api/v1";
+// Ensure HTTPS in production
+let API_BASE = import.meta.env.VITE_API_BASE_URL || "http://localhost:8000/api/v1";
+
+// Force HTTPS for production API calls
+if (import.meta.env.PROD && API_BASE.startsWith('http://')) {
+  API_BASE = API_BASE.replace('http://', 'https://');
+}
 
 const apiClient = axios.create({
   baseURL: API_BASE,
   withCredentials: true,
-  timeout: 10000,
+  timeout: 30000, // Increased for large uploads
 });
 
 apiClient.interceptors.request.use(
