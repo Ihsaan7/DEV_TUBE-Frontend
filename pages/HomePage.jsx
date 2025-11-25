@@ -220,7 +220,7 @@ const HomePage = () => {
                         <img
                           src={
                             video.owner?.avatar ||
-                            "https://via.placeholder.com/32"
+                            "https://placehold.co/32x32/333/fff?text=U"
                           }
                           alt={video.owner?.username}
                           className="w-7 h-7 sm:w-8 sm:h-8 rounded-full object-cover border border-neutral-300 dark:border-neutral-700"

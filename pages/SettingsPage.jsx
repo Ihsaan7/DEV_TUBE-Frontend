@@ -325,7 +325,7 @@ const SettingsPage = () => {
               </label>
               <div className="flex items-center gap-4">
                 <img
-                  src={avatarPreview || "https://via.placeholder.com/100"}
+                  src={avatarPreview || "https://placehold.co/100x100/333/fff?text=Avatar"}
                   alt="Avatar preview"
                   className="w-24 h-24 rounded-full object-cover border-4 border-orange-500"
                 />
@@ -364,7 +364,7 @@ const SettingsPage = () => {
                 <div className="w-full h-48 overflow-hidden border-2 border-orange-500">
                   <img
                     src={
-                      coverImagePreview || "https://via.placeholder.com/800x200"
+                      coverImagePreview || "https://placehold.co/800x200/333/fff?text=Cover+Image"
                     }
                     alt="Cover preview"
                     className="w-full h-full object-cover"

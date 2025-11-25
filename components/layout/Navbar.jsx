@@ -310,7 +310,7 @@ const Navbar = () => {
               <div className={`px-4 py-3 border-b ${isDark ? 'border-neutral-800' : 'border-neutral-200'}`}>
                 <div className="flex items-center gap-3">
                   <img
-                    src={user?.avatar || "https://via.placeholder.com/40"}
+                    src={user?.avatar || "https://placehold.co/40x40/333/fff?text=U"}
                     alt={user?.username}
                     className={`w-10 h-10 rounded-full object-cover border-2 ${
                       isDark ? "border-white" : "border-neutral-900"

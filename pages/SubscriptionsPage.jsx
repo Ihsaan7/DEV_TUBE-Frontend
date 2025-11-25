@@ -216,7 +216,7 @@ const SubscriptionsPage = () => {
                   <div className="relative w-32 h-32 mx-auto mb-4">
                     <img
                       src={
-                        subscription.avatar || "https://via.placeholder.com/128"
+                        subscription.avatar || "https://placehold.co/128x128/333/fff?text=Avatar"
                       }
                       alt={subscription.fullName}
                       className="w-full h-full rounded-full object-cover border-4 border-orange-500 transition-transform duration-300 group-hover:scale-105"

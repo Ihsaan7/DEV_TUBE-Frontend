@@ -252,7 +252,7 @@ const SearchResultsPage = () => {
                       <img
                         src={
                           video.owner?.avatar ||
-                          "https://via.placeholder.com/32"
+                          "https://placehold.co/32x32/333/fff?text=U"
                         }
                         alt={video.owner?.username}
                         className="w-8 h-8 rounded-full object-cover"
